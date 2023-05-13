@@ -138,7 +138,7 @@ public class FileServiceImpl implements FileService {
 			}
 			String[] subfiles = parent.toFile().list();
 			if (subfiles == null || subfiles.length == 0) {
-				log.info("Deleting empty parent: {}", parent.toString());
+				log.info("Deleting empty parent: {}", parent);
 				Files.delete(parent);
 				break;
 			}
@@ -147,7 +147,7 @@ public class FileServiceImpl implements FileService {
 
 
 	@Override
-	public boolean exists(final String aSessionId, final String aPath) throws FileServiceException {
+	public boolean exists(final String aSessionId, final String aPath) {
 		log.info(LOG_CALLED_PATH_SESSIONID, "exists", aPath, aSessionId);
 		validate(aPath);
 		return Paths.get(this.rootLocation.toString(), aPath).toFile().exists();
