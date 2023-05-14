@@ -30,10 +30,10 @@ pipeline {
                 sh "$MAVEN_HOME/mvn test -Denv=staging"
             }
             post {
-                always {
+                failure {
                      sh 'docker-compose -f docker-compose.staging.yml down'
                      emailext subject: 'Staging Test Notification',
-                              body: 'Staging tests completed successfully.',
+                              body: 'Staging tests failed..',
                               to: "$EMAIL_RECIPIENT"
                    }
             }
@@ -48,9 +48,9 @@ pipeline {
                 sh "$MAVEN_HOME/mvn test -Denv=production"
             }
             post {
-                always {
+                failure {
                      emailext subject: 'Production Test Notification',
-                              body: 'Production tests completed successfully.',
+                              body: 'Production tests failed.',
                               to: "$EMAIL_RECIPIENT"
                    }
             }
